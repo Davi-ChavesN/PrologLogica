@@ -1,0 +1,58 @@
+%PROBLEMA DO JANTAR
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+%Dias: sexta, sábado, domingo
+%Sopas: agrião, cebola, ervilha
+%Nomes: Nádia, Ana Lúcia, Dalva
+
+%Respostas:
+%Ana Lúcia - ervilha - sábado(?)
+%Nádia(?) - cebola - domingo
+%Dalva - agrião(?) - sexta
+
+%Definir nomes
+nome(anaLucia).
+nome(nadia).
+nome(dalva).
+
+%Definir sopas
+sopa(ervilha).
+sopa(cebola).
+sopa(agrião).
+
+%Definir dias
+dia(sexta).
+dia(sabado).
+dia(domingo).
+
+%Função para definir a solução do problema
+consulta(Respostas) :-
+    %Lista com os resulltados
+	Respostas = [
+		resultado(anaLucia, Sopa1, Dia1),
+		resultado(nadia, Sopa2, Dia2),
+		resultado(dalva, Sopa3, Dia3)
+	],
+    
+    %Sopas são diferentes para cada nome
+    sopa(Sopa1),
+    sopa(Sopa2),
+    sopa(Sopa3),
+    Sopa1 \= Sopa2,
+    Sopa1 \= Sopa3,
+    Sopa2 \= Sopa3,
+    
+    %Dias são diferentes para cada nome
+    dia(Dia1),
+    dia(Dia2),
+    dia(Dia3),
+    Dia1 \= Dia2,
+    Dia1 \= Dia3,
+    Dia2 \= Dia3,
+    
+    %Dados que foram dados pelo enunciado
+    member(resultado(anaLucia, ervilha, _), Respostas),
+    member(resultado(_, cebola, domingo), Respostas),
+    member(resultado(dalva, _, sexta), Respostas).

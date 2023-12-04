@@ -1,0 +1,160 @@
+%FAZENDEIROS E SUAS FAZENDAS
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+% Nome Fazendeiro	: Damião, Josué,  Mariano, Tadeu, Yago.
+% Data Propriedadde	: 1949, 1956, 1963, 1972, 1980.
+% Medida em Acres	: 2500, 2750, 3250, 3500, 3600.
+% Animal Exótico	: avestruz, jacaré, javali, lhama, veado.
+
+%Premissas:
+% 1. Josué entrou para vida de fazenda mais tarde que o homem que agora cria 
+% 		jacarés, cuja fazenda é menor que a de Josué.
+% 2. A fazenda com 3250 acres foi comprada em 1980.
+% 3. As lhamas são criadas na fazenda comprada logo a seguir à maior fazenda.
+% 4. 2500 acres é a medida da fazenda onde são criados javalis, que não 
+% 		foi adquirida em 1956.
+% 5. Yago cuida de veados; ele fez sua estréia no mundo das fazendas em um ano 
+% 		posterior ao que hoje é criador de avestruzes.
+% 6. Tadeu é o dono da fazenda com 3500 acres (que não cria avestruzes).
+% 7. 1963 foi o ano em que Mariano comprou sua fazenda; sua propriedade 
+% 		é maior que a de Damião, mas não é tão grande quanto a 
+% 		que foi comprada em 1949.
+% 8. Uma das fazendas foi comprada em 1972.
+% 9. Duas fazendas possuem, respectivamente, 2750 e 3600 acres.
+
+%Respostas:
+% Damião	- 1972 - 2500 - javali
+% Yago 		- 1980 - 3250 - veado
+% Tadeu 	- 1949 - 3500 - jacare
+% Mariano 	- 1963 - 2750 - lhama
+% Josué 	- 1956 - 3600 - avestruz
+
+
+fazendeiro(damiao).
+fazendeiro(josue).
+fazendeiro(mariano).
+fazendeiro(tadeu).
+fazendeiro(yago).
+
+data(1949).
+data(1956).
+data(1963).
+data(1972).
+data(1980).
+
+medida(2500).
+medida(2750).
+medida(3250).
+medida(3500).
+medida(3600).
+
+animal(avestruz).
+animal(jacare).
+animal(javali).
+animal(lhama).
+animal(veado).
+
+resultado(Fazendas):-
+    Fazendas = [
+               fazenda(damiao,Data1,Medida1,Animal1),
+               fazenda(josue,Data2,Medida2,Animal2),
+               fazenda(mariano,Data3,Medida3,Animal3),
+               fazenda(tadeu,Data4,Medida4,Animal4),
+               fazenda(yago,Data5,Medida5,Animal5)
+               ],
+    
+    data(Data1),
+    data(Data2),
+    data(Data3),
+    data(Data4),
+    data(Data5),
+    Data1 \= Data2,
+    Data1 \= Data3,
+    Data1 \= Data4,
+    Data1 \= Data5,
+    Data2 \= Data3,
+    Data2 \= Data4,
+    Data2 \= Data5,
+    Data3 \= Data4,
+    Data3 \= Data5,
+    Data4 \= Data5,
+    
+    medida(Medida1),
+    medida(Medida2),
+    medida(Medida3),
+    medida(Medida4),
+    medida(Medida5),
+    Medida1 \= Medida2,
+    Medida1 \= Medida3,
+    Medida1 \= Medida4,
+    Medida1 \= Medida5,
+    Medida2 \= Medida3,
+    Medida2 \= Medida4,
+    Medida2 \= Medida5,
+    Medida3 \= Medida4,
+    Medida3 \= Medida5,
+    Medida4 \= Medida5,
+    
+    animal(Animal1),
+    animal(Animal2),
+    animal(Animal3),
+    animal(Animal4),
+    animal(Animal5),
+    Animal1 \= Animal2,
+    Animal1 \= Animal3,
+    Animal1 \= Animal4,
+    Animal1 \= Animal5,
+    Animal2 \= Animal3,
+    Animal2 \= Animal4,
+    Animal2 \= Animal5,
+    Animal3 \= Animal4,
+    Animal3 \= Animal5,
+    Animal4 \= Animal5,
+
+% 1. Josué entrou para vida de fazenda mais tarde que o homem que agora cria 
+% 		jacarés, cuja fazenda é menor que a de Josué.
+	member(fazenda(josue, Datajosue, Medidajosue, _),Fazendas),
+    member(fazenda(_, Dataoutro, Medidaoutro, jacare),Fazendas),
+    Datajosue > Dataoutro,
+    Medidajosue > Medidaoutro,
+
+% 2. A fazenda com 3250 acres foi comprada em 1980.
+	member(fazenda(_, 1980, 3250, _),Fazendas),
+    
+% 3. As lhamas são criadas na fazenda comprada logo a seguir à maior fazenda.
+	member(fazenda(_, Datalhama, _, lhama),Fazendas),
+    member(fazenda(_, DatamaiorF, 3600, _),Fazendas),
+    Datalhama > DatamaiorF,
+    
+% 4. 2500 acres é a medida da fazenda onde são criados javalis, que não 
+% 		foi adquirida em 1956.
+	member(fazenda(_, _, 2500, javali),Fazendas),
+    not(member(fazenda(_, 1956, 2500, javali),Fazendas)),
+    
+% 5. Yago cuida de veados; ele fez sua estréia no mundo das fazendas em um ano 
+% 		posterior ao que hoje é criador de avestruzes.
+	member(fazenda(yago, Anoyago, _, veado),Fazendas),
+    member(fazenda(_, Anoavestruz, _, avestruz),Fazendas),
+    Anoyago > Anoavestruz,
+    
+% 6. Tadeu é o dono da fazenda com 3500 acres (que não cria avestruzes).
+	member(fazenda(tadeu, _, 3500, _),Fazendas),
+    not(member(fazenda(tadeu, _, 3500, avestruz),Fazendas)),
+    
+% 7. 1963 foi o ano em que Mariano comprou sua fazenda; sua propriedade 
+% 		é maior que a de Damião, mas não é tão grande quanto a 
+% 		que foi comprada em 1949.
+	member(fazenda(mariano, 1963, Medidamariano, _),Fazendas),
+    member(fazenda(damiao, _, Medidadamiao, _),Fazendas),
+    member(fazenda(_, 1949, Medida1949, _),Fazendas),
+    Medidamariano > Medidadamiao,
+    Medidamariano < Medida1949,
+    
+% 8. Uma das fazendas foi comprada em 1972.
+    member(fazenda(_, 1972, _, _),Fazendas),
+    
+% 9. Duas fazendas possuem, respectivamente, 2750 e 3600 acres.
+    member(fazenda(_, _, 2750, _),Fazendas),
+    member(fazenda(_, _, 3600, _),Fazendas).

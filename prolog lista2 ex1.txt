@@ -1,0 +1,58 @@
+%RELAÇÕES DE PARENTESCO:
+%PAI, MÃE, FILHO, FILHA E IRMÃOS
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+homem(abraham).
+homem(clancy).
+homem(herbert).
+homem(homer).
+homem(bart).
+mulher(mona).
+mulher(jacqueline).
+mulher(abbie).
+mulher(marge).
+mulher(patty).
+mulher(selma).
+mulher(lisa).
+mulher(maggie).
+mulher(ling).
+progenitor(abraham, homer).
+progenitor(abraham, abbie).
+progenitor(abraham, herbert).
+progenitor(mona, homer).
+progenitor(clancy, marge).
+progenitor(clancy, patty ).
+progenitor(clancy, selma).
+progenitor(jacqueline, marge).
+progenitor(jacqueline, patty ).
+progenitor(jacqueline, selma).
+progenitor(homer, bart).
+progenitor(homer, lisa).
+progenitor(homer, maggie).
+progenitor(marge, bart).
+progenitor(marge, lisa).
+progenitor(marge, maggie).
+progenitor(selma, ling ).
+
+pai(Y + "é pai de" + X):-
+    progenitor(Y,X),
+    homem(Y).
+
+mae(X + "é mãe de" + Y):-
+    progenitor(X,Y),
+    mulher(X).
+
+filho(Y + "é filho de" + X):-
+    progenitor(X,Y),
+    homem(Y).
+
+filha(X + "é filha de" + Y):-
+    progenitor(Y,X),
+    mulher(X).
+
+irmaos(X + "e" + Y + "são irmã(o)s"):-
+    progenitor(Z,X),
+    progenitor(Z,Y),
+    X \= Y.

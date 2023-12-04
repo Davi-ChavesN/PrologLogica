@@ -1,0 +1,147 @@
+%BARCOS PESQUEIROS
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+%NomeBarco	: Marina, Gaivota, Jangada, Rei do Mares, Netuno.
+%CódigoBarco: E18, E34, E42, E56, E60.
+%NomeMestre	: Benedito, Wanderson, Bernardo, Hélio, Fernando.
+%Pesca		: Sardinha, Siri, Badejo, Lagosta, Dourado.
+
+%Premissas:
+% 1. O E34 pescará sardinhas.
+% 2. O “Marina” é o E18, enquanto o “Gaivota” navega sob o comando do mestre 
+%  		Benedito.
+% 3. A tripulação do “Jangada” está pegando siris. O “Rei dos Mares” não está 
+% 		a procura de badejos e seu mestre não é Wanderson.
+% 4.Nem a tripulação do “Netuno” nem o mestre Bernardo e sua tripulação 
+% 		pegarão lagostas.
+% 5.O barco do mestre Hélio, E60, não é o “Jangada” nem o “Rei dos Mares”.
+% 6.O mestre Fernando espera pescar muitos dourados em um barco cujo 
+% 		nome começa com “M”.
+% 7.O registro do “Gaivota” não é E56.
+% 8.Dois registros são E42 e E60.
+
+%Respostas:
+% Gaivota 		- E42	- Benedito 	- Lagosta
+% Jangada 		- E56	- Wanderson - Siri
+% Marina 		- E18	- Fernando 	- Dourado
+% Netuno 		- E60	- Hélio 	- Badejo
+% Rei dos Mares - E34	- Bernardo 	- Sardinha
+
+nomebarco(gaivota).
+nomebarco(jangada).
+nomebarco(marina).
+nomebarco(netuno).
+nomebarco(rei_dos_mares).
+
+codigobarco(e18).
+codigobarco(e34).
+codigobarco(e42).
+codigobarco(e56).
+codigobarco(e60).
+
+nomemestre(benedito).
+nomemestre(bernardo).
+nomemestre(fernando).
+nomemestre(helio).
+nomemestre(wanderson).
+
+pesca(badejo).
+pesca(dourado).
+pesca(lagosta).
+pesca(sardinha).
+pesca(siri).
+
+resultado(Barcos):-
+	Barcos = [
+               barco(gaivota, CodigoB1, NomeM1, Pesca1),
+               barco(jangada, CodigoB2, NomeM2, Pesca2),
+               barco(marina, CodigoB3, NomeM3, Pesca3),
+               barco(netuno, CodigoB4, NomeM4, Pesca4),
+               barco(rei_dos_mares, CodigoB5, NomeM5, Pesca5)
+         	],
+
+	codigobarco(CodigoB1),
+	codigobarco(CodigoB2),
+	codigobarco(CodigoB3),
+	codigobarco(CodigoB4),
+	codigobarco(CodigoB5),
+	CodigoB1 \= CodigoB2,
+	CodigoB1 \= CodigoB3,
+	CodigoB1 \= CodigoB4,
+	CodigoB1 \= CodigoB5,
+	CodigoB2 \= CodigoB3,
+	CodigoB2 \= CodigoB4,
+	CodigoB2 \= CodigoB5,
+	CodigoB3 \= CodigoB4,
+	CodigoB3 \= CodigoB5,
+	CodigoB4 \= CodigoB5,
+
+	nomemestre(NomeM1),
+	nomemestre(NomeM2),
+	nomemestre(NomeM3),
+	nomemestre(NomeM4),
+	nomemestre(NomeM5),
+	NomeM1 \= NomeM2,
+	NomeM1 \= NomeM3,
+	NomeM1 \= NomeM4,
+	NomeM1 \= NomeM5,
+	NomeM2 \= NomeM3,
+	NomeM2 \= NomeM4,
+	NomeM2 \= NomeM5,
+	NomeM3 \= NomeM4,
+	NomeM3 \= NomeM5,
+	NomeM4 \= NomeM5,
+	
+	pesca(Pesca1),
+	pesca(Pesca2),
+	pesca(Pesca3),
+	pesca(Pesca4),
+	pesca(Pesca5),
+	Pesca1 \= Pesca2,
+	Pesca1 \= Pesca3,
+	Pesca1 \= Pesca4,
+	Pesca1 \= Pesca5,
+	Pesca2 \= Pesca3,
+	Pesca2 \= Pesca4,
+	Pesca2 \= Pesca5,
+	Pesca3 \= Pesca4,
+	Pesca3 \= Pesca5,
+	Pesca4 \= Pesca5,
+    
+    % 1. O E34 pescará sardinhas.
+    member(barco(_, e34, _, sardinha),Barcos),
+
+	% 2. O “Marina” é o E18, enquanto o “Gaivota” navega sob o comando do mestre 
+	%  		Benedito.
+	member(barco(marina, e18, _, _),Barcos),
+    member(barco(gaivota, _, benedito, _),Barcos),
+    
+    % 3. A tripulação do “Jangada” está pegando siris. O “Rei dos Mares” não está 
+	% 		a procura de badejos e seu mestre não é Wanderson.
+   	member(barco(jangada, _, _, siri),Barcos),
+    not(member(barco(rei_dos_mares, _, _, badejo),Barcos)),
+    not(member(barco(rei_dos_mares, _, wanderson, _),Barcos)),
+    
+    % 4.Nem a tripulação do “Netuno” nem o mestre Bernardo e sua tripulação 
+	% 		pegarão lagostas.
+    not(member(barco(netuno, _, _, lagosta),Barcos)),
+    not(member(barco(_, _, bernardo, lagosta),Barcos)),
+    
+    % 5.O barco do mestre Hélio, E60, não é o “Jangada” nem o “Rei dos Mares”.
+    member(barco(_, e60, helio, _),Barcos),
+    not(member(barco(jangada, e60, helio, _),Barcos)),
+    not(member(barco(rei_dos_mares, e60, helio, _),Barcos)),
+    
+    % 6.O mestre Fernando espera pescar muitos dourados em um barco cujo 
+	% 		nome começa com “M”.
+    member(barco(M, _, fernando, dourado),Barcos),
+    atom_chars(M, ['m' | _]),
+    
+    % 7.O registro do “Gaivota” não é E56.
+    not(member(barco(gaivota, e56, _, _),Barcos)),
+    
+    % 8.Dois registros são E42 e E60.
+    member(barco(_, e42, _, _),Barcos),
+    member(barco(_, e60, _, _),Barcos).

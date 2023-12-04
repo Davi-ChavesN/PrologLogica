@@ -1,0 +1,43 @@
+%NOITE DE SONHOS
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+%Nome		: Juliano, Nelson, Roberto
+%%Entidade	: Dragão, Unicórnio, Bruxa
+%Local		: Floresta, Pântano, Castelo
+
+%Respostas:
+%	Roberto - Unicórnio - Floresta(?)
+%	Nelson(?) - Bruxa - Pântano
+%	Juliano - Dragão(?) - Castelo
+
+
+nome(juliano).
+nome(nelson).
+nome(roberto).
+
+entidade(dragao).
+entidade(unicornio).
+entidade(bruxa).
+
+local(floresta).
+local(pantano).
+local(castelo).
+
+resultado(Sonhos):-
+    Sonhos = [
+        sonho(juliano, Entidade1, Local1),
+    	sonho(nelson, Entidade2, Local2),
+        sonho(roberto, Entidade3, Local3) 
+                ],
+
+	entidade(Entidade1), entidade(Entidade2), entidade(Entidade3),
+	Entidade1 \= Entidade2, Entidade1 \= Entidade3, Entidade2 \= Entidade3,
+
+	local(Local1), local(Local2), local(Local3),
+	Local1 \= Local2, Local1 \= Local3, Local2 \= Local3,
+
+    member(sonho(roberto, unicornio, _),Sonhos),
+    member(sonho(_, bruxa, pantano),Sonhos),
+    member(sonho(juliano, _, castelo),Sonhos).

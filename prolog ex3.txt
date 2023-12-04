@@ -1,0 +1,29 @@
+%VIAGEM
+
+%Aluno: Davi de Oliveira Chaves
+%Turma: ADS - 2º período
+
+deCarro(auckland,hamilton).
+deCarro(hamilton,raglan).
+deCarro(valmont,saarbruecken).
+deCarro(valmont,metz).
+deTrem(metz,frankfurt).
+deTrem(saarbruecken,frankfurt).
+deTrem(metz,paris).
+deTrem(saarbruecken,paris).
+deAviao(frankfurt,bangkok).
+deAviao(frankfurt,singapore).
+deAviao(paris,losAngeles).
+deAviao(bangkok,auckland).
+deAviao(losAngeles,auckland). 
+
+viagem(X,Y):-			%função para encontrar a rota caso seja uma rota direta
+    deCarro(X,Y);
+    deTrem(X,Y);
+    deAviao(X,Y).
+
+viagem(X,Y):-			%função com recursividade para encontrar rota caso não seja direta
+    (deCarro(X,Z);		%Criar um loop de possibilidades, procurando rotas diretas,
+    deTrem(X,Z);		%após encontrar uma rota alternativa, verifica se está ligado
+    deAviao(X,Z)),		%ao destino final, caso não esteja, loopa de novo.
+    viagem(Z,Y).
